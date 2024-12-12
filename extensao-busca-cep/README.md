@@ -96,7 +96,8 @@ function buscaCEP(cep) {
             console.error("Erro na requisição:", error.message);
         });
 }
-Esse código realiza a consulta à API ViaCEP e injeta as informações de forma dinâmica no navegador.
+
+# Esse código realiza a consulta à API ViaCEP e injeta as informações de forma dinâmica no navegador.
 
 Testando sua Extensão
 Acesse o navegador Chrome.
