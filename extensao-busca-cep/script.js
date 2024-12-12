@@ -5,6 +5,7 @@ const resultado = document.querySelector('.resultado');
 
 // Adiciona o evento de submit ao formulário
 form.addEventListener('submit', async (event) => {
+    
     event.preventDefault(); // Impede o envio padrão do formulário
 
     const cep = input.value.trim();
