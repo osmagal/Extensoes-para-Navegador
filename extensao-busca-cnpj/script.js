@@ -34,6 +34,8 @@ form.addEventListener('submit', async (event) => {
         <p><strong>CNPJ:</strong> ${dadosCNPJ.taxId}</p>
         <p><strong>Status:</strong> ${dadosCNPJ.status.text}</p>
         <p><strong>Atividade Principal:</strong> ${dadosCNPJ.mainActivity.text}</p>
+        <p><strong>Telefone:</strong> ${dadosCNPJ.phones.map(phone => `(${phone.area}) ${phone.number}`).join(', ') || 'N/A'}</p>
+        <p><strong>E-mail:</strong> ${dadosCNPJ.emails.map(email => email.address).join(', ') || 'N/A'}</p>
         <p><strong>Endereço:</strong> ${dadosCNPJ.address.street}, ${dadosCNPJ.address.number}, ${dadosCNPJ.address.district}, ${dadosCNPJ.address.city} - ${dadosCNPJ.address.state}, CEP: ${dadosCNPJ.address.zip}</p>
     `;
 });
