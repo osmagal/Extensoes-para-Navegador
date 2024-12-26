@@ -1,0 +1,37 @@
+body {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#output {
+    width: 82%;
+    padding: 15px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    text-align: justify;
+    line-height: 1.5;
+}
+
+#select-pdf {
+    width: 90%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #453fc3;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#select-pdf:hover {
+    background-color: #3f3389;
+}
+
+h1{
+    text-align: center;
+}
