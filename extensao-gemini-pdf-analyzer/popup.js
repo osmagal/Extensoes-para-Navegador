@@ -72,7 +72,7 @@ document.getElementById("select-pdf").addEventListener("click", async () => {
 async function getResponseFromAPI(inputText) {
     try {
         // Faz a requisição à API com o texto fornecido.
-        const response = await fetch("https://script.google.com/macros/s/'ID_DO_SEU_APPS_SCRIPT'/exec", {
+        const response = await fetch("https://script.google.com/macros/s/YOUR_ID_APPS_SCRIPT/exec", {
             method: "POST", // Método POST para enviar dados.
             headers: {
                 "Content-Type": "application/json"
