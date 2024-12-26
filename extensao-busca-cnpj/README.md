@@ -1,109 +1,196 @@
-# Como Criar uma Extensão para Navegador Chrome com API para Buscar CEP
+# **Extensão para Navegador Chrome: Como Buscar CNPJ com Facilidade**  
 
-Criar uma extensão para o navegador Chrome que utilize a API ViaCEP para buscar informações de CEP pode ser mais simples do que parece. Este artigo apresenta o passo a passo para configurar e implementar essa funcionalidade.
+Se você precisa consultar dados de CNPJ com rapidez e praticidade, criar uma extensão para o navegador Chrome pode ser a solução ideal. Descubra como implementar uma ferramenta simples e eficiente utilizando HTML, CSS e JavaScript.  
 
-Por que criar uma extensão para busca de CEP?
-Extensões para navegador são ferramentas práticas para automatizar tarefas diárias. Utilizar a API ViaCEP, por exemplo, permite consultar rapidamente informações de endereço a partir de um CEP diretamente no navegador.
+---
 
-Configurando o Manifesto da Extensão
-O primeiro passo é criar o arquivo manifest.json. Ele define as permissões e configurações principais da extensão.
+## **O que é a extensão para buscar CNPJ?**  
 
-json
-Copiar código
-{
-  "manifest_version": 3,
-  "name": "Buscar CEP",
-  "version": "1.0",
-  "description": "Extensão para buscar endereço por CEP usando a API ViaCEP.",
-  "permissions": ["scripting", "activeTab"],
-  "host_permissions": ["<all urls>"],
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": "cep.png"
-  }
-}
-# Criando o Frontend da Extensão
-Para o design e interface, utilizamos um arquivo popup.html. Ele contém o formulário para inserção do CEP e exibição dos resultados.
+Uma extensão para o Chrome permite realizar consultas rápidas a partir do navegador. Neste caso, a funcionalidade está focada em buscar informações detalhadas de um CNPJ diretamente da API, proporcionando agilidade para quem trabalha com dados empresariais.  
 
-Estrutura HTML
-html
-Copiar código
+---
+
+## **Como funciona a extensão?**  
+
+A extensão utiliza:  
+
+1. **HTML e CSS** para criar uma interface amigável.  
+2. **JavaScript** para conectar-se à API de consulta.  
+3. Arquivo **manifest.json** para configurar permissões e propriedades.  
+
+### **Passo a passo do funcionamento**  
+
+1. O usuário insere o CNPJ no campo de entrada.  
+2. A extensão envia o CNPJ para a API configurada.  
+3. Os dados retornados são exibidos em tempo real na interface.  
+
+---
+
+## **Estrutura do código da extensão**  
+
+### **Arquivo HTML: Interface básica**  
+
+```html  
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar CEP</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <form>
-        <label for="input">Digite o CEP:</label>
-        <input type="text" id="input" class="input" placeholder="Ex: 01001000" required>
-        <button type="submit">Buscar</button>
+        <input type="text" class="input" placeholder="Digite o CNPJ">
+        <button class="button">Buscar CNPJ</button>
     </form>
     <div class="resultado"></div>
-    <script src="popup.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
-Esse formulário coleta o CEP e exibe as informações retornadas pela API.
+```  
 
-Implementando a Lógica com JavaScript
-Agora, configuramos o arquivo popup.js para gerenciar o envio do CEP e a comunicação com a API ViaCEP.
+O arquivo HTML cria o layout com campos para inserção e exibição de resultados.  
 
-Código do Arquivo popup.js
-javascript
-Copiar código
-// Seleciona elementos da interface
+---
+
+### **Arquivo CSS: Estilização**  
+
+```css  
+body {
+    width: 400px;
+}
+
+form {
+    background-color: #f8f8f8;
+    width: 90%;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 82%;
+    padding: 15px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.button {
+    width: 90%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    background-color: #453fc3;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #3f3389;
+}
+```  
+
+O arquivo CSS garante uma interface atraente e responsiva.  
+
+---
+
+### **Arquivo JavaScript: Consulta à API**  
+
+```javascript  
+// Seleciona o formulário e o campo de entrada
 const form = document.querySelector('form');
 const input = document.querySelector('.input');
 const resultado = document.querySelector('.resultado');
 
-// Adiciona evento ao formulário
+// Adiciona o evento de submit ao formulário
 form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Evita o comportamento padrão
+    event.preventDefault();
 
-    // Obtém a aba ativa do navegador
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const cnpj = input.value.trim().replace(/\D/g, '');
+    if (!cnpj) {
+        resultado.textContent = "Por favor, insira um CNPJ válido.";
+        resultado.style.color = "red";
+        return;
+    }
 
-    // Injeta a função para buscar CEP
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: buscaCEP,
-        args: [input.value], // Passa o CEP como argumento
-    }).then(() => {
-        console.log("Função injetada com sucesso!");
-    });
+    const dadosCNPJ = await buscaCNPJ(cnpj);
+
+    if (!dadosCNPJ) {
+        resultado.textContent = "CNPJ não encontrado ou erro na consulta. Tente novamente.";
+        resultado.style.color = "red";
+        return;
+    }
+
+    resultado.style.padding = "18px";
+    resultado.style.fontSize = "12px";
+    resultado.style.fontWeight = "700";
+    resultado.style.color = "black";
+
+    resultado.innerHTML = `
+        <p><strong>Razão Social:</strong> ${dadosCNPJ.company.name}</p>
+        <p><strong>Fantasia:</strong> ${dadosCNPJ.alias || 'N/A'}</p>
+        <p><strong>CNPJ:</strong> ${dadosCNPJ.taxId}</p>
+        <p><strong>Status:</strong> ${dadosCNPJ.status.text}</p>
+        <p><strong>Atividade Principal:</strong> ${dadosCNPJ.mainActivity.text}</p>
+        <p><strong>Telefone:</strong> ${dadosCNPJ.phones.map(phone => `(${phone.area}) ${phone.number}`).join(', ') || 'N/A'}</p>
+        <p><strong>E-mail:</strong> ${dadosCNPJ.emails.map(email => email.address).join(', ') || 'N/A'}</p>
+        <p><strong>Endereço:</strong> ${dadosCNPJ.address.street}, ${dadosCNPJ.address.number}, ${dadosCNPJ.address.district}, ${dadosCNPJ.address.city} - ${dadosCNPJ.address.state}, CEP: ${dadosCNPJ.address.zip}</p>
+    `;
 });
 
-// Função para consultar CEP
-function buscaCEP(cep) {
-    const url = `https://viacep.com.br/ws/${cep}/json/`;
-    
-    fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Erro ao buscar o CEP");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            // Exibe os dados na página
-            const div = document.createElement('div');
-            div.textContent = `Endereço: ${data.logradouro}, Bairro: ${data.bairro}, Cidade: ${data.localidade}, Estado: ${data.uf}`;
-            document.body.appendChild(div);
-        })
-        .catch((error) => {
-            console.error("Erro na requisição:", error.message);
-        });
+// Função para consultar o CNPJ
+async function buscaCNPJ(cnpj) {
+    try {
+        const url = `https://open.cnpja.com/office/${cnpj}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar dados na API');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Erro na função buscaCNPJ:", error.message);
+        return null;
+    }
 }
+```  
 
-# Esse código realiza a consulta à API ViaCEP e injeta as informações de forma dinâmica no navegador.
+O script conecta a extensão à API e retorna os dados formatados.  
 
-Testando sua Extensão
-Acesse o navegador Chrome.
-Vá para chrome://extensions/.
-Ative o modo desenvolvedor.
-Carregue a pasta do projeto.
-Teste a extensão inserindo um CEP válido.
-Conclusão
-Criar uma extensão para navegador que busca CEPs utilizando a API ViaCEP é uma excelente forma de aprender sobre desenvolvimento web e APIs. Além disso, essa solução pode ser personalizada para atender a diversas necessidades. Com ferramentas simples e práticas, você pode automatizar processos e otimizar o uso do navegador.
+---
+
+### **Manifest.json: Configurações**  
+
+```json  
+{
+    "name": "Buscar CNPJ",
+    "description": "Busca dados de CNPJ da API ReceitaWS",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "activeTab", 
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "cnpj.png"
+    }
+}
+```  
+
+Esse arquivo define permissões e parâmetros da extensão.  
+
+---
+
+## **Conclusão**  
+
+Criar uma extensão para buscar CNPJ no navegador Chrome é prático e acessível. Com essas orientações, você pode desenvolver uma ferramenta funcional que otimiza tarefas diárias. Personalize o código para atender às suas necessidades específicas.
