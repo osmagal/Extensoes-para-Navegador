@@ -9,6 +9,9 @@ document.getElementById("select-pdf").addEventListener("click", async () => {
 
         const file = event.target.files[0];
 
+        document.querySelector("#loading").style.display = "flex";
+        document.querySelector("#output").style.display = "none";
+
         if (file) {
             // Leitura do arquivo PDF.
             const reader = new FileReader();
@@ -58,6 +61,8 @@ document.getElementById("select-pdf").addEventListener("click", async () => {
 
                 const output = document.getElementById("output");
                 output.value = await resp.response;
+                document.querySelector("#loading").style.display = "none";
+                document.querySelector("#output").style.display = "flex";
 
             };
 
