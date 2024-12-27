@@ -1,4 +1,4 @@
-//AIzaSyDCbmRbEAmq-P2unn1jb8WybMbRnIdV8u8
+
 
 // Replace with your actual API key
 const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
