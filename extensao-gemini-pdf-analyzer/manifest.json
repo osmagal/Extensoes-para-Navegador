@@ -3,11 +3,18 @@
     "name": "PDF Data Extractor With Gemini",
     "version": "1.0",
     "description": "Extensão para extrair dados específicos de arquivos PDF.",
-    "permissions": ["activeTab", "scripting"],
+    "side_panel": {
+      "default_path": "popup.html"
+    },
+    "permissions": ["activeTab", "scripting", "runtime", "sidePanel", "tabs"],
     "host_permissions": ["<all_urls>"],
     "action": {
       "default_popup": "popup.html",
       "default_icon": "pdf-icon.png"
-    }
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "open_page": "popup.html"
   }
   

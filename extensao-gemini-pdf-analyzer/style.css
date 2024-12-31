@@ -1,10 +1,24 @@
 body {
-    width: 400px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #e5eff1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    overflow: hidden;
 }
+
+/* responsivity for devices with width less than 200px */
+@media (min-width: 200px) {
+    body {
+        width: 100%;
+    }
+}
+
 
 #output {
     width: 82%;
