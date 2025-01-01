@@ -1,6 +1,21 @@
 
 body{
-    width: 400px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e5eff1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* responsivity for devices with width less than 200px */
+@media (min-width: 200px) {
+    body {
+        width: 100%;
+    }
 }
 
 form {
@@ -34,4 +49,9 @@ form {
 
 .button:hover{
     background-color: #3f3389; 
+}
+
+.logo {
+    width: 50px;
+    margin-top: 20px;
 }

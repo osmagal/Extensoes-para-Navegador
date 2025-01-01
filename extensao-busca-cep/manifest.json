@@ -1,11 +1,17 @@
 {
     "name": "Buscar CEP",
     "description": "Busca dados de CEP da API Viacep",
+    "side_panel": {
+        "default_path": "index.html"
+    },
     "version": "1.0",
     "manifest_version": 3,
     "permissions": [
-        "activeTab", 
-        "scripting"
+        "activeTab",
+        "scripting",
+        "runtime",
+        "sidePanel",
+        "tabs"
     ],
     "host_permissions": [
         "<all urls>"
@@ -13,5 +19,9 @@
     "action": {
         "default_popup": "index.html",
         "default_icon": "cep.png"
-    }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "open_page": "index.html"
 }

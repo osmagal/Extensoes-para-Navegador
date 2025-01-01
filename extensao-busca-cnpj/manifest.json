@@ -1,11 +1,17 @@
 {
     "name": "Buscar CNPJ",
     "description": "Busca dados de CNPJ da API ReceitaWS",
+    "side_panel": {
+        "default_path": "index.html"
+    },
     "version": "1.0",
     "manifest_version": 3,
     "permissions": [
-        "activeTab", 
-        "scripting"
+        "activeTab",
+        "scripting",
+        "runtime",
+        "sidePanel",
+        "tabs"
     ],
     "host_permissions": [
         "https://*/*",
@@ -14,5 +20,9 @@
     "action": {
         "default_popup": "index.html",
         "default_icon": "cnpj.png"
-    }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "open_page": "index.html"
 }

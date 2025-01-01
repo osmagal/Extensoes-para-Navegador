@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "PDF Data Extractor With Gemini",
+    "name": "Resume PDF AI",
     "version": "1.0",
-    "description": "Extensão para extrair dados específicos de arquivos PDF.",
+    "description": "Extensão para resumir arquivo PDF com IA.",
     "side_panel": {
       "default_path": "popup.html"
     },
