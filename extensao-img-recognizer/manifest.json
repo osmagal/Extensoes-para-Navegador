@@ -1,12 +1,12 @@
 {
     "manifest_version": 3,
-    "name": "Recognize Image",
+    "name": "IMG & PDF Extract Text",
     "version": "1.0",
     "description": "Extensão para extrair texto de imagem com IA.",
     "side_panel": {
       "default_path": "popup.html"
     },
-    "permissions": ["storage", "activeTab", "scripting", "runtime", "sidePanel", "tabs"],
+    "permissions": ["storage", "activeTab", "scripting", "runtime", "sidePanel", "tabs", "geolocation"],
     "host_permissions": ["<all_urls>"],
     "action": {
       "default_popup": "popup.html",
