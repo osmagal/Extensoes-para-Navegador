@@ -90,7 +90,7 @@ async function convertToBase64(url) {
 async function getResponseFromAPI(file) {
     try {
         // Faz a requisição à API com o texto fornecido.
-        const response = await fetch("https://script.google.com/macros/s/AKfycbzNkbcFer9ENipAdWlfVsA3K2cdgrrLUjT2Gze2RlxP_YGt-f6QMTnchmLbQZR_jkQf/exec", {
+        const response = await fetch("https://script.google.com/macros/s/YOUR_ID_APPS_SCRIPT/exec", {
             method: "POST", // Método POST para enviar dados.
             headers: {
                 "Content-Type": "application/json"
