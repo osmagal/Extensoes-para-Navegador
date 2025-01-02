@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Resume PDF AI",
+    "name": "Recognize Image",
     "version": "1.0",
-    "description": "Extensão para resumir arquivo PDF com IA.",
+    "description": "Extensão para extrair texto de imagem com IA.",
     "side_panel": {
       "default_path": "popup.html"
     },
@@ -10,7 +10,7 @@
     "host_permissions": ["<all_urls>"],
     "action": {
       "default_popup": "popup.html",
-      "default_icon": "pdf-icon.png"
+      "default_icon": "img-icon.png"
     },
     "background": {
       "service_worker": "background.js"
