@@ -48,15 +48,16 @@ document.querySelector(".input").addEventListener("change", async () => {
             let resp;
             const output = document.getElementById("output");
 
-            console.log('Tipo do arquivo:', tipoArquivo);
-
             if (tipoArquivo && tipoArquivo.includes("image/")) {
-                console.log('Imagem');
+                console.log('Imagem por URL');
+                
                 // Use as variáveis tipoArquivo e nomeArquivo conforme necessário
                 const b64 = await convertToBase64(url);
+
+                // Faz a requisição à API com o texto fornecido.
                 resp = await getResponseFromAPI({ content: b64, name: nomeArquivo, type: tipoArquivo});
-                // Exibe a resposta na tela.
                 
+                // Exibe a resposta na tela.
                 output.value = resp;
 
             } else {
@@ -79,72 +80,3 @@ document.querySelector(".input").addEventListener("change", async () => {
         document.querySelector("#output").value = "Insira uma URL válida";
     }
 });
-
-async function convertToBase64(url) {
-    const response = await fetch(url);
-    const buffer = await response.arrayBuffer();
-    const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
-    return base64String;
-}
-
-async function getResponseFromAPI(file) {
-    try {
-        // Faz a requisição à API com o texto fornecido.
-        const response = await fetch("https://script.google.com/macros/s/YOUR_ID_APPS_SCRIPT/exec", {
-            method: "POST", // Método POST para enviar dados.
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ 
-                file: file.content,
-                name: file.name,
-                type: file.type,
-                url: file.url_file
-            }) // Envia o texto como JSON.
-        });
-
-        // Verifica se a resposta foi bem-sucedida.
-        if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.status}`);
-        }
-
-        // Converte a resposta para JSON.
-        const data = await response.text();
-
-        // Exibe o resultado no console.
-        //console.log("Resposta da API:", data);
-
-        // Retorna o JSON no formato desejado.
-        return data.trim() || "Resposta não disponível";
-    } catch (error) {
-        console.error("Erro ao obter resposta do servidor: ", error);
-        return "Erro ao processar a solicitação";
-    }
-}
-
-function verificarArquivoPorURL(url) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('HEAD', url, true);
-    
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            const contentType = xhr.getResponseHeader('Content-Type');
-            const nomeArquivo = url.split('/').pop();
-    
-            resolve({
-              tipo: contentType,
-              nome: nomeArquivo
-            });
-          } else {
-            reject(new Error(`Erro ao obter informações do arquivo: ${xhr.statusText}`));
-          }
-        };
-    
-        xhr.onerror = function() {
-          reject(new Error('Erro de rede:', xhr.statusText));
-        };
-    
-        xhr.send();
-      });
-}

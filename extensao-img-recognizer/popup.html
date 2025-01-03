@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF & IMG Data Extractor</title>
     <script src="popup.js" defer></script>
+    <script src="base64.js"></script>
+    <script src="get-response-api.js"></script>
+    <script src="verify-file-url.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <img src="img-icon.png" alt="Logo PDF" class="logo">
     <h1>IMG & PDF Extract Text</h1>
+    <p id="assign">By Oséias Magalhães</p>
     <input type="file" id="select-img" class="file">
     <input type="text" class="input" placeholder="URL da imagem">
     <img src="loading.gif" id="loading">
